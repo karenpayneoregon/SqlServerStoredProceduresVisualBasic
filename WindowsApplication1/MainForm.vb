@@ -75,7 +75,7 @@ Public Class MainForm
     End Sub
     Private Sub LoadCustomers()
 
-        Dim customerDataTable = dataOperations.RetrieveAllRecords
+        Dim customerDataTable = dataOperations.RetrieveAllCustomerRecords
         Dim contactList = dataOperations.RetrieveContactTitles()
 
         If dataOperations.IsSuccessFul Then

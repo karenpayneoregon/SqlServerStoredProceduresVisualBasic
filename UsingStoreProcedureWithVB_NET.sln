@@ -15,6 +15,10 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ExtensionsLibrary", "Extens
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataOperations", "DataOperations_vb\DataOperations.vbproj", "{A2C991FA-0442-4723-8D35-F97E263D2ADB}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WindowsApp1", "WindowsApp1\WindowsApp1.vbproj", "{162E9ACB-173B-48F1-A3C6-AB9D44978C9F}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ImagesStoredProcedures", "ImagesStoredProcedures\ImagesStoredProcedures.vbproj", "{8393FE2D-B38B-43A4-A6E6-7460D5AAB788}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{A2C991FA-0442-4723-8D35-F97E263D2ADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2C991FA-0442-4723-8D35-F97E263D2ADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2C991FA-0442-4723-8D35-F97E263D2ADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{162E9ACB-173B-48F1-A3C6-AB9D44978C9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162E9ACB-173B-48F1-A3C6-AB9D44978C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162E9ACB-173B-48F1-A3C6-AB9D44978C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162E9ACB-173B-48F1-A3C6-AB9D44978C9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8393FE2D-B38B-43A4-A6E6-7460D5AAB788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8393FE2D-B38B-43A4-A6E6-7460D5AAB788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8393FE2D-B38B-43A4-A6E6-7460D5AAB788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8393FE2D-B38B-43A4-A6E6-7460D5AAB788}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
