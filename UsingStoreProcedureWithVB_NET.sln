@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2041
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WindowsApplication1", "WindowsApplication1\WindowsApplication1.vbproj", "{0BCCADDD-4ABD-4846-92B8-284A4EDF0584}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WorkingCRUD", "WindowsApplication1\WorkingCRUD.vbproj", "{0BCCADDD-4ABD-4846-92B8-284A4EDF0584}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{88032562-7629-4BB9-B257-25BBE8864950}"
 	ProjectSection(SolutionItems) = preProject
