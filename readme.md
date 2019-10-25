@@ -2,6 +2,10 @@
 
 A code sample to explore working with Stored Procedures in Visual Studio using VB.NET. Find the C# version [repository here](https://github.com/karenpayneoregon/StoredProcedureBasicsWindowsFormsCS).
 
+![Figure 1](assets/SP1.png)
+
+![Figure 2](assets/SP2.jpg)
+
 ## Requires
 - Visual Studio with Framework 4.6 or higher.
 - NuGet package [BaseConnectionLibrary](https://www.nuget.org/packages/BaseConnectionLibrary/).
