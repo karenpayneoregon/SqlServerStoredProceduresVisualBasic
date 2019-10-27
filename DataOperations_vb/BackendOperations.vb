@@ -49,31 +49,50 @@ Public Class BackendOperations
 
     End Function
     ''' <summary>
-    ''' Mocked up sample showing how to return error information from a failed
-    ''' operation within a stored procedure.
+    ''' Mocked up sample showing how to return error 
+    ''' information from a failed operation within 
+    ''' a stored procedure.
     ''' </summary>
     Public Sub ReturnErrorInformation()
         Using cn As New SqlConnection With {.ConnectionString = ConnectionString}
-            Using cmd As New SqlCommand With {.Connection = cn, .CommandType = CommandType.StoredProcedure}
+            Using cmd As New SqlCommand With {.Connection = cn}
+
+                cmd.CommandType = CommandType.StoredProcedure
 
                 cmd.CommandText = "dbo.[usp_ThrowDummyException]"
 
-                cmd.Parameters.Add(New SqlParameter With {.ParameterName = "@ErrorMessage", .SqlDbType = SqlDbType.NVarChar,
-                                      .Direction = ParameterDirection.Output}).Value = ""
+                cmd.Parameters.Add(New SqlParameter With
+                                      {
+                                        .ParameterName = "@ErrorMessage",
+                                        .SqlDbType = SqlDbType.NVarChar,
+                                        .Direction = ParameterDirection.Output
+                                      }).Value = ""
 
-                cmd.Parameters.Add(New SqlParameter With {.ParameterName = "@ErrorSeverity", .SqlDbType = SqlDbType.Int,
-                                      .Direction = ParameterDirection.Output})
+                cmd.Parameters.Add(New SqlParameter With
+                                      {
+                                        .ParameterName = "@ErrorSeverity",
+                                        .SqlDbType = SqlDbType.Int,
+                                        .Direction = ParameterDirection.Output
+                                      })
 
-                cmd.Parameters.Add(New SqlParameter With {.ParameterName = "@ErrorState", .SqlDbType = SqlDbType.Int,
-                                      .Direction = ParameterDirection.Output})
+                cmd.Parameters.Add(New SqlParameter With
+                                      {
+                                        .ParameterName = "@ErrorState",
+                                        .SqlDbType = SqlDbType.Int,
+                                        .Direction = ParameterDirection.Output
+                                      })
 
                 Try
+
                     cn.Open()
                     cmd.ExecuteNonQuery()
+
                 Catch ex As Exception
+
                     Console.WriteLine($"[{ex.Message}]")
                     Console.WriteLine(cmd.Parameters("@ErrorSeverity").Value)
                     Console.WriteLine(cmd.Parameters("@ErrorState").Value)
+
                 End Try
             End Using
         End Using
@@ -151,23 +170,49 @@ Public Class BackendOperations
         Return contactList
 
     End Function
-    Public Function AddCustomer(companyName As String, contactName As String, contactTypeIdentifier As Integer) As Integer
+    Public Function AddCustomer(
+        companyName As String,
+        contactName As String,
+        contactTypeIdentifier As Integer) As Integer
+
         mHasException = False
         Try
             Using cn As New SqlConnection With {.ConnectionString = ConnectionString}
 
-                Using cmd As New SqlCommand With {.Connection = cn, .CommandType = CommandType.StoredProcedure}
+                Using cmd As New SqlCommand With {.Connection = cn}
+
+                    cmd.CommandType = CommandType.StoredProcedure
 
                     cmd.CommandText = "dbo.InsertCustomer"
 
-                    cmd.Parameters.Add(New SqlParameter With {.ParameterName = "@CompanyName", .SqlDbType = SqlDbType.NVarChar})
-                    cmd.Parameters.Add(New SqlParameter With {.ParameterName = "@ContactName", .SqlDbType = SqlDbType.NVarChar})
-                    cmd.Parameters.Add(New SqlParameter With {.ParameterName = "@ContactTypeIdentifier", .SqlDbType = SqlDbType.Int})
-                    cmd.Parameters.Add(New SqlParameter With {.ParameterName = "@Identity", .SqlDbType = SqlDbType.Int,
-                                                              .Direction = ParameterDirection.Output})
+                    cmd.Parameters.Add(New SqlParameter With
+                                          {
+                                              .ParameterName = "@CompanyName",
+                                              .SqlDbType = SqlDbType.NVarChar
+                                          })
+
+                    cmd.Parameters.Add(New SqlParameter With
+                                          {
+                                          .ParameterName = "@ContactName",
+                                          .SqlDbType = SqlDbType.NVarChar
+                                          })
+
+                    cmd.Parameters.Add(New SqlParameter With
+                                          {
+                                              .ParameterName = "@ContactTypeIdentifier",
+                                              .SqlDbType = SqlDbType.Int
+                                          })
+
+                    cmd.Parameters.Add(New SqlParameter With
+                                          {
+                                              .ParameterName = "@Identity",
+                                              .SqlDbType = SqlDbType.Int,
+                                              .Direction = ParameterDirection.Output
+                                          })
 
                     cmd.Parameters("@CompanyName").Value = companyName
                     cmd.Parameters("@ContactName").Value = contactName
+
                     cmd.Parameters("@ContactTypeIdentifier").Value = contactTypeIdentifier
 
                     cn.Open()
@@ -179,6 +224,7 @@ Public Class BackendOperations
                 End Using
             End Using
         Catch ex As Exception
+
             mHasException = True
             mLastException = ex
 
@@ -396,7 +442,7 @@ Public Class BackendOperations
     ''' </summary>
     ''' <param name="identifier"></param>
     ''' <returns></returns>
-    Public Function GetAllCustomerRecordsByIdentifier(ByVal identifier As Integer) As DataTable
+    Public Function GetAllCustomerRecordsByIdentifier(identifier As Integer) As DataTable
         mHasException = False
         Dim dt = New DataTable()
 
@@ -431,7 +477,7 @@ Public Class BackendOperations
     ''' </summary>
     ''' <param name="companyName"></param>
     ''' <returns></returns>
-    Public Function GetAllCustomerRecordsByCompanyName(ByVal companyName As String) As DataTable
+    Public Function GetAllCustomerRecordsByCompanyName(companyName As String) As DataTable
         mHasException = False
         Dim dt = New DataTable()
 

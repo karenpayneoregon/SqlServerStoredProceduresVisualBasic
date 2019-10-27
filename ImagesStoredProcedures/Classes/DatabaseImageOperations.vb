@@ -53,15 +53,15 @@ Namespace Classes
         ''' <summary>
         ''' Given a valid image converts it to a byte array
         ''' </summary>
-        ''' <param name="img"></param>
+        ''' <param name="image"></param>
         ''' <returns></returns>
         ''' <remarks>
         ''' Suitable for saving a file to disk
         ''' Alternate is to use a memory stream
         ''' </remarks>
-        Public Function ImageToByte(img As Image) As Byte()
+        Public Function ImageToByte(image As Image) As Byte()
             Dim converter = New ImageConverter()
-            Return DirectCast(converter.ConvertTo(img, GetType(Byte())), Byte())
+            Return DirectCast(converter.ConvertTo(image, GetType(Byte())), Byte())
         End Function
 
         ''' <summary>
@@ -71,7 +71,11 @@ Namespace Classes
         ''' <param name="description">Information to describe the image</param>
         ''' <param name="identifier">New primary key</param>
         ''' <returns></returns>
-        Public Function InsertImage(image As Image, description As String, ByRef identifier As Integer) As Success
+        Public Function InsertImage(
+            image As Image,
+            description As String,
+            ByRef identifier As Integer) As Success
+
             mHasException = False
 
             Using cn = New SqlConnection With {.ConnectionString = ConnectionString}
@@ -91,12 +95,17 @@ Namespace Classes
                     })
 
                     Try
+
                         cn.Open()
                         identifier = Convert.ToInt32(cmd.ExecuteScalar())
+
                         Return Success.Okay
+
                     Catch ex As Exception
+
                         mHasException = True
                         mLastException = ex
+
                         Return Success.OhSnap
                     End Try
                 End Using
@@ -131,13 +140,19 @@ Namespace Classes
                     })
 
                     Try
+
                         cn.Open()
                         identifier = Convert.ToInt32(cmd.ExecuteScalar())
+
                         Return Success.Okay
+
                     Catch ex As Exception
+
                         mHasException = True
                         mLastException = ex
+
                         Return Success.OhSnap
+
                     End Try
                 End Using
             End Using
@@ -154,7 +169,11 @@ Namespace Classes
         ''' <remarks>
         ''' An alternative is to return the image rather than success as done now
         ''' </remarks>
-        Public Function GetImage(identifier As Integer, ByRef inBoundImage As Image, ByRef description As String) As Success
+        Public Function GetImage(
+             identifier As Integer,
+             ByRef inBoundImage As Image,
+             ByRef description As String) As Success
+
             mHasException = False
 
             Dim dtResults As New DataTable()

@@ -3,8 +3,8 @@ Imports DataOperations.TypeClasses
 Imports ExtensionsLibrary
 
 Public Class MainForm
-    Private dataOperations As New BackendOperations
-    Private bsCustomers As New BindingSource
+    Private _dataOperations As New BackendOperations
+    Private _bsCustomers As New BindingSource
     ''' <summary>
     ''' Insert a new row
     ''' </summary>
@@ -13,7 +13,7 @@ Public Class MainForm
     ''' <remarks></remarks>
     Private Sub NewCustomerButton_Click(sender As Object, e As EventArgs) Handles NewCustomerButton.Click
 
-        If bsCustomers.DataSource Is Nothing Then
+        If _bsCustomers.DataSource Is Nothing Then
             MessageBox.Show("Please select some data")
             Exit Sub
         End If
@@ -21,16 +21,16 @@ Public Class MainForm
 
         Dim f As New CustomerEditorForm
         Try
-            f.cboContactTitles.DataSource = dataOperations.RetrieveContactTitles
+            f.cboContactTitles.DataSource = _dataOperations.RetrieveContactTitles
             If f.ShowDialog() = DialogResult.OK Then
                 If f.ValidateTextBoxes Then
 
                     Dim contactTypeIdentifier = CType(f.cboContactTitles.SelectedItem, ContactType).Identifier
-                    Dim primaryKey As Integer = dataOperations.
+                    Dim primaryKey As Integer = _dataOperations.
                             AddCustomer(f.txtCompanyName.Text, f.txtContactName.Text, contactTypeIdentifier)
 
                     If primaryKey <> -1 Then
-                        bsCustomers.AddRow(primaryKey, f.txtCompanyName.Text, f.txtContactName.Text, f.cboContactTitles.Text, contactTypeIdentifier)
+                        _bsCustomers.AddRow(primaryKey, f.txtCompanyName.Text, f.txtContactName.Text, f.cboContactTitles.Text, contactTypeIdentifier)
                     End If
                 Else
                     MessageBox.Show("Nothing save as one or more fields were empty.")
@@ -50,21 +50,21 @@ Public Class MainForm
     ''' <remarks></remarks>
     Private Sub RemoveCurrentCustomerButton_Click(sender As Object, e As EventArgs) Handles RemoveCurrentCustomerButton.Click
 
-        If bsCustomers.DataSource Is Nothing Then
+        If _bsCustomers.DataSource Is Nothing Then
             MessageBox.Show("Please select some data")
             Exit Sub
         End If
 
-        If My.Dialogs.Question("Remove " & bsCustomers.CurrentRow.CompanyName) Then
-            If Not dataOperations.RemoveCustomer(bsCustomers.CurrentRow.Identifier) Then
-                If Not dataOperations.IsSuccessFul Then
-                    MessageBox.Show($"Failed to remove customer{Environment.NewLine}{dataOperations.LastExceptionMessage}")
+        If My.Dialogs.Question("Remove " & _bsCustomers.CurrentRow.CompanyName) Then
+            If Not _dataOperations.RemoveCustomer(_bsCustomers.CurrentRow.Identifier) Then
+                If Not _dataOperations.IsSuccessFul Then
+                    MessageBox.Show($"Failed to remove customer{Environment.NewLine}{_dataOperations.LastExceptionMessage}")
                 End If
             Else
                 '
                 ' Only remove row if removed successfully from the database table
                 '
-                bsCustomers.RemoveCurrent()
+                _bsCustomers.RemoveCurrent()
 
             End If
         End If
@@ -75,23 +75,26 @@ Public Class MainForm
     End Sub
     Private Sub LoadCustomers()
 
-        Dim customerDataTable = dataOperations.RetrieveAllCustomerRecords
-        Dim contactList = dataOperations.RetrieveContactTitles()
+        Dim customerDataTable = _dataOperations.RetrieveAllCustomerRecords
+        Dim contactList = _dataOperations.RetrieveContactTitles()
 
-        If dataOperations.IsSuccessFul Then
+        If _dataOperations.IsSuccessFul Then
 
-            bsCustomers.DataSource = customerDataTable
-            bsCustomers.Sort = "CompanyName"
+            _bsCustomers.DataSource = customerDataTable
+            _bsCustomers.Sort = "CompanyName"
 
-            DataGridView1.DataSource = bsCustomers
+            DataGridView1.DataSource = _bsCustomers
             DataGridView1.ExpandColumns()
 
-            bsCustomers.MoveFirst()
+            _bsCustomers.MoveFirst()
 
             ContactTypeComboBox.DataSource = contactList
 
         Else
-            MessageBox.Show($"Failed to load data{Environment.NewLine}{dataOperations.LastExceptionMessage}")
+
+            MessageBox.Show($"Failed to load data{Environment.NewLine}" &
+                            $"{_dataOperations.LastExceptionMessage}")
+
         End If
     End Sub
     ''' <summary>
@@ -105,21 +108,21 @@ Public Class MainForm
 
         Dim contactTypeIdentifier = CType(ContactTypeComboBox.SelectedItem, ContactType).Identifier
 
-        Dim dt = dataOperations.GetAllRecordsByContactTitle(contactTypeIdentifier)
+        Dim dt = _dataOperations.GetAllRecordsByContactTitle(contactTypeIdentifier)
 
-        If dataOperations.IsSuccessFul Then
-            bsCustomers.DataSource = dt
-            DataGridView1.DataSource = bsCustomers
-            bsCustomers.MoveFirst()
+        If _dataOperations.IsSuccessFul Then
+            _bsCustomers.DataSource = dt
+            DataGridView1.DataSource = _bsCustomers
+            _bsCustomers.MoveFirst()
         Else
-            bsCustomers.DataSource = Nothing
-            DataGridView1.DataSource = bsCustomers
+            _bsCustomers.DataSource = Nothing
+            DataGridView1.DataSource = _bsCustomers
         End If
 
-        bsCustomers.DataSource = dt
-        DataGridView1.DataSource = bsCustomers
+        _bsCustomers.DataSource = dt
+        DataGridView1.DataSource = _bsCustomers
 
-        bsCustomers.MoveFirst()
+        _bsCustomers.MoveFirst()
     End Sub
     ''' <summary>
     ''' For either
@@ -141,38 +144,38 @@ Public Class MainForm
         EditCurrentCustomer()
     End Sub
     Private Sub DataGridView1_DoubleClick(sender As Object, e As EventArgs) Handles DataGridView1.DoubleClick
-        If bsCustomers.Current IsNot Nothing Then
+        If _bsCustomers.Current IsNot Nothing Then
             EditCurrentCustomer()
         End If
     End Sub
     Private Sub EditCurrentCustomer()
-        If bsCustomers.DataSource Is Nothing Then
+        If _bsCustomers.DataSource Is Nothing Then
             MessageBox.Show("Please select some data")
             Exit Sub
         End If
 
-        Dim contactList = dataOperations.RetrieveContactTitles()
+        Dim contactList = _dataOperations.RetrieveContactTitles()
 
         Dim f As New CustomerEditorForm
         Try
 
-            f.txtCompanyName.Text = bsCustomers.CurrentRow.CompanyName
-            f.txtContactName.Text = bsCustomers.CurrentRow.ContactName
+            f.txtCompanyName.Text = _bsCustomers.CurrentRow.CompanyName
+            f.txtContactName.Text = _bsCustomers.CurrentRow.ContactName
             f.cboContactTitles.DataSource = contactList
 
             f.cboContactTitles.SelectedIndex = contactList.FindIndex(
-                Function(contactType) contactType.ContactType = bsCustomers.CurrentRow.ContactTitle)
+                Function(contactType) contactType.ContactType = _bsCustomers.CurrentRow.ContactTitle)
 
             If f.ShowDialog() = DialogResult.OK Then
                 If f.ValidateTextBoxes Then
 
-                    Dim customerIdentifier = bsCustomers.CurrentRow.Identifier
+                    Dim customerIdentifier = _bsCustomers.CurrentRow.Identifier
                     Dim contactTypeIdentifier = CType(f.cboContactTitles.SelectedItem, ContactType).Identifier
 
-                    If dataOperations.UpdateCustomer(customerIdentifier, f.txtCompanyName.Text, f.txtContactName.Text, contactTypeIdentifier) Then
-                        bsCustomers.CurrentRow.SetCompanyName(f.txtCompanyName.Text)
-                        bsCustomers.CurrentRow.SetContactName(f.txtContactName.Text)
-                        bsCustomers.CurrentRow.SetContactTitle(f.cboContactTitles.Text)
+                    If _dataOperations.UpdateCustomer(customerIdentifier, f.txtCompanyName.Text, f.txtContactName.Text, contactTypeIdentifier) Then
+                        _bsCustomers.CurrentRow.SetCompanyName(f.txtCompanyName.Text)
+                        _bsCustomers.CurrentRow.SetContactName(f.txtContactName.Text)
+                        _bsCustomers.CurrentRow.SetContactTitle(f.cboContactTitles.Text)
                     End If
                 Else
                     MessageBox.Show("Nothing save as one or more fields were empty.")
@@ -185,7 +188,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ExitButton_Click(sender As Object, e As EventArgs) Handles ExitButton.Click
-        dataOperations.ReturnErrorInformation()
+        _dataOperations.ReturnErrorInformation()
 
     End Sub
 End Class

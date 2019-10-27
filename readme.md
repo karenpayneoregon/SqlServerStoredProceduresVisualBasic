@@ -1,6 +1,12 @@
 # Working with Stored Procedures VB.NET
 
-A code sample to explore working with Stored Procedures in Visual Studio using VB.NET. Find the C# version [repository here](https://github.com/karenpayneoregon/StoredProcedureBasicsWindowsFormsCS).
+A code sample to explore working with Stored Procedures in Visual Studio using VB.NET. 
+
+[Microsoft TechNet article VB.NET](https://social.technet.microsoft.com/wiki/contents/articles/53391.sql-server-stored-procedures-for-vb-net-windows-forms.aspx)
+
+[Microsoft TechNet article C#](https://social.technet.microsoft.com/wiki/contents/articles/53361.sql-server-stored-procedures-for-c-windows-forms.aspx)
+
+Find the C# version [repository here](https://github.com/karenpayneoregon/StoredProcedureBasicsWindowsFormsCS).
 
 ![Figure 1](assets/SP1.png)
 
